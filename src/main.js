@@ -1,3 +1,5 @@
+'use strict';
+
 const createMenuTemplate = () => {
   return `<section class="control__btn-wrap">
   <input
@@ -27,7 +29,7 @@ const createMenuTemplate = () => {
     >STATISTICS</label
   >
 </section>`;
-}
+};
 
 const createSearchTemplate = () => {
   return `<section class="main__search search container">
@@ -124,7 +126,7 @@ const createBoardTemplate = () => {
   return `<section class="board container">
   <div class="board__tasks"></div>
   </section>`;
-}
+};
 
 const createEditTaskTemplate = () => {
   return `<article class="card card--edit card--yellow card--repeat">
@@ -480,8 +482,6 @@ const boardTasks = board.querySelector(`.board__tasks`);
 render(board, createSortingBoardTemplate(), `afterbegin`);
 render(boardTasks, createEditTaskTemplate());
 
-new Array(3).fill(``).forEach(
-  () => render(boardTasks, createCardTemplate())
-);
+new Array(3).fill(``).forEach(() => render(boardTasks, createCardTemplate()));
 
 render(board, createLoadMoreButtonTemplate());
