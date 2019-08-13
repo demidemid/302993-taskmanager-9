@@ -27,7 +27,7 @@ const createFilterTemplate = ({name, count = 0, isChecked = false} = {}) => {
 
 const filterTemplate = filterElements.map(createFilterTemplate).join(`\n`);
 
-export const filterBlockTemplate = `
+export const getFilterTemplate = `
   <section class="main__filter filter container">
     ${filterTemplate}
   </section>`;
