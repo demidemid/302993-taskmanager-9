@@ -3,13 +3,13 @@ import {
   getSearchTemplate,
   getFilterTemplate,
   getBoardTemplate,
-  createLoadMoreButtonTemplate,
-  createSortingBoardTemplate,
-  createTaskTemplate,
-  createEditTaskTemplate,
-} from './index';
+  getLoadMoreButtonTemplate,
+  getSortingBoardTemplate,
+  getTaskTemplate,
+  getEditTaskTemplate,
+} from './components/';
 
-import {render} from './components/render';
+import {render} from './render';
 
 const main = document.querySelector(`.main`);
 const mainControl = main.querySelector(`.main__control`);
@@ -22,9 +22,9 @@ render(main, getBoardTemplate());
 const board = main.querySelector(`.board`);
 const boardTasks = board.querySelector(`.board__tasks`);
 
-render(board, createSortingBoardTemplate(), `afterbegin`);
-render(boardTasks, createEditTaskTemplate());
+render(board, getSortingBoardTemplate(), `afterbegin`);
+render(boardTasks, getEditTaskTemplate());
 
-new Array(3).fill(``).forEach(() => render(boardTasks, createTaskTemplate()));
+new Array(3).fill(``).forEach(() => render(boardTasks, getTaskTemplate()));
 
-render(board, createLoadMoreButtonTemplate());
+render(board, getLoadMoreButtonTemplate());
