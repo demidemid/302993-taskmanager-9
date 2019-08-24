@@ -5,19 +5,19 @@ import {
   getBoardTemplate,
   getLoadMoreButtonTemplate,
   getSortingBoardTemplate,
+  getTaskEditTemplate,
   getTaskTemplate,
 } from './components/';
 
-import {getData} from './data';
+import {getData, TaskDisplay, tasks} from './data/mock';
 import {render} from './render';
 
-const TASK_TOTAL_COUNT = 26;
-const TASK_PER_PAGE = 8;
-
 const taskStat = {
-  leftToShow: TASK_TOTAL_COUNT,
+  quantityCounter: 0,
+  leftToShow: tasks.length,
 
-  updateLeftToShow(quantity) {
+  updateTaskStat(quantity) {
+    this.quantityCounter += quantity;
     this.leftToShow -= quantity;
   },
 };
@@ -34,35 +34,34 @@ const board = main.querySelector(`.board`);
 const boardTasks = board.querySelector(`.board__tasks`);
 
 render(board, getSortingBoardTemplate(), `afterbegin`);
+render(boardTasks, new Array(1).fill(``).map(getData).map(getTaskEditTemplate).join(``));
 
-const renderTasks = (container, count, firstEdit = false) => {
-
-  const tasks = new Array(count).fill(``).map(getData);
-  if (firstEdit) {
-    tasks[0].isEdit = true;
-  }
-
-  render(container, tasks.map(getTaskTemplate).join(``));
+const renderTasks = (start, end) => {
+  render(boardTasks, tasks.slice(start, end).map(getTaskTemplate).join(``));
 };
 
 const getTaskQuantityParam = () => {
-  let quantity = taskStat.leftToShow > TASK_PER_PAGE ? TASK_PER_PAGE : taskStat.leftToShow;
-  taskStat.updateLeftToShow(quantity);
+  let quantity = taskStat.leftToShow > TaskDisplay.PER_PAGE ? TaskDisplay.PER_PAGE : taskStat.leftToShow;
 
-  if (taskStat.leftToShow === 0) {
-    loadMoreButton.remove();
-  }
-
+  taskStat.updateTaskStat(quantity);
   return quantity;
 };
 
-renderTasks(boardTasks, getTaskQuantityParam(), true);
+renderTasks(taskStat.quantityCounter, getTaskQuantityParam());
 
-render(board, getLoadMoreButtonTemplate());
 
-const onClickMoreButton = () => {
-  renderTasks(boardTasks, getTaskQuantityParam());
-};
+// LOAD MORE BUTTON
+if (taskStat.leftToShow > 0) {
+  render(board, getLoadMoreButtonTemplate());
 
-const loadMoreButton = document.querySelector(`.load-more`);
-loadMoreButton.addEventListener(`click`, onClickMoreButton);
+  const loadMoreButton = document.querySelector(`.load-more`);
+  loadMoreButton.addEventListener(`click`, onLoadMoreButtonClick);
+
+  const onLoadMoreButtonClick = () => {
+    renderTasks(taskStat.quantityCounter, taskStat.quantityCounter + getTaskQuantityParam());
+
+    if (taskStat.leftToShow === 0) {
+      loadMoreButton.remove();
+    }
+  };
+}

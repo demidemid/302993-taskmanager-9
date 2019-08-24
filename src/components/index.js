@@ -4,7 +4,8 @@ import {getFilterTemplate} from './filter';
 import {getBoardTemplate} from './board';
 import {getLoadMoreButtonTemplate} from './load-more-button';
 import {getSortingBoardTemplate} from './sort-board';
-import {getTaskTemplate} from './task.js';
+import {getTaskTemplate} from './task';
+import {getTaskEditTemplate} from './edit-task';
 
 export {
   getMenuTemplate,
@@ -14,4 +15,5 @@ export {
   getLoadMoreButtonTemplate,
   getSortingBoardTemplate,
   getTaskTemplate,
+  getTaskEditTemplate,
 };

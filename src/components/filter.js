@@ -1,12 +1,4 @@
-const filterElements = [
-  {name: `All`, count: 13, isChecked: true},
-  {name: `Overdue`, count: 0},
-  {name: `Today`, count: 0},
-  {name: `Favorites`, count: 1},
-  {name: `Repeating`, count: 1},
-  {name: `Tags`, count: 1},
-  {name: `Archive`, count: 115},
-];
+import {filterElements} from '../data/mock';
 
 const createFilterTemplate = ({name, count = 0, isChecked = false} = {}) => {
   const id = name.toLowerCase();
